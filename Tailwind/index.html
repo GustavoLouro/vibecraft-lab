@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KicksLab — Loja de Tênis</title>
+
+  <!-- Tailwind CSS via CDN Oficial -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-fuchsia-50 text-slate-900 font-sans min-h-screen">
+
+  <!-- ==========================================================================
+       BARRA DE NAVEGAÇÃO
+       - Cores vibrantes (Roxo, Rosa Choque e Amarelo Neon)
+       ========================================================================== -->
+  <header class="w-full border-b-2 border-purple-200 bg-white/80 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      
+      <!-- Logo da Loja de Tênis -->
+      <a href="#" class="text-2xl font-black tracking-tight text-purple-900">
+        KICKS<span class="text-pink-600">&</span>LAB
+      </a>
+
+      <!-- Menu de Navegação -->
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-bold text-purple-950">
+        <a href="#inicio" class="hover:text-pink-600 transition-colors">Início</a>
+        <a href="#etapas" class="hover:text-pink-600 transition-colors">Como Fazemos</a>
+        <a href="#" class="hover:text-pink-600 transition-colors">Modelos</a>
+        <a href="#" class="hover:text-pink-600 transition-colors">Contato</a>
+      </nav>
+
+      <!-- Botão Chamativo -->
+      <div>
+        <a href="#" class="inline-block bg-lime-400 hover:bg-lime-300 text-purple-950 font-black text-xs uppercase tracking-wider px-5 py-3 rounded-md shadow-md hover:shadow-lg transition-all duration-200">
+          Personalizar Par
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- ==========================================================================
+         SEÇÃO 1 DO LAYOUT: HERO / DESTAQUE COM 2 COLUNAS
+         - Coluna Esquerda: Título em destaque, descrição e botão outline
+         - Coluna Direita: Lista com 3 caixas de amostras de materiais e divisores
+         - Cores nada a ver: Roxo escuro, Rosa, Ciano e Amarelo
+         ========================================================================== -->
+    <section id="inicio" class="py-16 md:py-24 border-b-2 border-purple-200">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Coluna Esquerda: Texto Principal -->
+          <div class="lg:col-span-7">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-purple-950 leading-tight mb-6">
+              Sneakers feitos para dominar o asfalto e roubar a cena.
+            </h1>
+            
+            <p class="text-purple-800 text-base sm:text-lg leading-relaxed max-w-xl mb-8">
+              Cortamos, costuramos e montamos cada par na mão — do street clássico para a correria do dia a dia às edições limitadas mais disputadas. Você escolhe cada detalhe da sua silhueta.
+            </p>
+
+            <a href="#etapas" class="inline-block border-2 border-purple-900 hover:bg-purple-900 hover:text-white text-purple-950 font-bold text-sm tracking-wider uppercase px-7 py-3 rounded-md transition-all">
+              Ver etapas de produção
+            </a>
+          </div>
+
+          <!-- Coluna Direita: Lista de 3 Amostras de Materiais com Divisórias -->
+          <div class="lg:col-span-5 bg-white p-6 rounded-2xl border-2 border-purple-200 shadow-sm">
+            <div class="divide-y-2 divide-purple-100">
+              
+              <!-- Amostra 1: Rosa Choque -->
+              <div class="py-4 flex items-center space-x-4">
+                <div class="w-12 h-12 flex-shrink-0 bg-pink-500 rounded-lg shadow-sm border border-pink-600"></div>
+                <div>
+                  <h3 class="text-sm font-bold text-purple-950">Camurça Rosa Choque</h3>
+                  <p class="text-xs text-purple-700">Nobuck premium impermeabilizado e resistente a atrito</p>
+                </div>
+              </div>
+
+              <!-- Amostra 2: Azul Ciano Neon -->
+              <div class="py-4 flex items-center space-x-4">
+                <div class="w-12 h-12 flex-shrink-0 bg-cyan-400 rounded-lg shadow-sm border border-cyan-500"></div>
+                <div>
+                  <h3 class="text-sm font-bold text-purple-950">Mesh Respirável Azul Ciano</h3>
+                  <p class="text-xs text-purple-700">Tecido de alta circulação de ar com tramas duplas</p>
+                </div>
+              </div>
+
+              <!-- Amostra 3: Amarelo Marca-Texto -->
+              <div class="py-4 flex items-center space-x-4">
+                <div class="w-12 h-12 flex-shrink-0 bg-yellow-400 rounded-lg shadow-sm border border-yellow-500"></div>
+                <div>
+                  <h3 class="text-sm font-bold text-purple-950">Borracha Amarelo Neon</h3>
+                  <p class="text-xs text-purple-700">Solado vulcanizado com alta aderência para skate e rua</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         SEÇÃO 2 DO LAYOUT: AS 4 ETAPAS DE PRODUÇÃO
+         - Fundo roxo profundo / contrastante (cores totalmente diferentes)
+         - 4 colunas separadas com números 01, 02, 03 e 04 vibrantes
+         ========================================================================== -->
+    <section id="etapas" class="bg-purple-950 text-white py-16 md:py-24">
+      <div class="max-w-6xl mx-auto px-6">
+        
+        <!-- Cabeçalho da Seção -->
+        <div class="mb-14">
+          <h2 class="text-3xl sm:text-4xl font-black text-lime-400 mb-3">
+            O processo, em quatro etapas
+          </h2>
+          <p class="text-purple-200 text-sm sm:text-base max-w-2xl">
+            Cada sneaker passa pelo mesmo processo rigoroso, do recorte dos painéis até a prensagem térmica final da sola.
+          </p>
+        </div>
+
+        <!-- Grid de 4 Colunas com Linhas Divisórias -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0">
+          
+          <!-- Etapa 01 -->
+          <div class="lg:pr-8">
+            <span class="block text-3xl font-black text-pink-400 mb-2">01</span>
+            <h3 class="font-bold text-base text-white mb-2">Corte dos Painéis</h3>
+            <p class="text-xs text-purple-300 leading-relaxed">
+              O couro e as telas sintéticas são cortados a laser e navalha no gabarito exato de cada tamanho de calçado.
+            </p>
+          </div>
+
+          <!-- Etapa 02 -->
+          <div class="lg:px-8 lg:border-l-2 lg:border-purple-800">
+            <span class="block text-3xl font-black text-cyan-400 mb-2">02</span>
+            <h3 class="font-bold text-base text-white mb-2">Costura Reforçada</h3>
+            <p class="text-xs text-purple-300 leading-relaxed">
+              Os módulos do cabedal são pespontados com linha de nylon de alta tenacidade para suportar impacto diário.
+            </p>
+          </div>
+
+          <!-- Etapa 03 -->
+          <div class="lg:px-8 lg:border-l-2 lg:border-purple-800">
+            <span class="block text-3xl font-black text-yellow-400 mb-2">03</span>
+            <h3 class="font-bold text-base text-white mb-2">Entressola de Gel</h3>
+            <p class="text-xs text-purple-300 leading-relaxed">
+              Aplicação da palmilha com placa de absorção de impacto e fôrma anatômica que molda ao formato do pé.
+            </p>
+          </div>
+
+          <!-- Etapa 04 -->
+          <div class="lg:pl-8 lg:border-l-2 lg:border-purple-800">
+            <span class="block text-3xl font-black text-lime-400 mb-2">04</span>
+            <h3 class="font-bold text-base text-white mb-2">Vulcanização</h3>
+            <p class="text-xs text-purple-300 leading-relaxed">
+              A sola de borracha é prensada sob alta temperatura e pressão contínua para uma fixação que nunca descola.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

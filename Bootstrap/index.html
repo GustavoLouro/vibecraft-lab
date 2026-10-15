@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classic Cars - Loja de Carros</title>
+
+  <!-- CSS do Bootstrap 5 via CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Nosso arquivo de estilos personalizados -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="bootstrap/style.css">
+</head>
+<body>
+
+  <!-- ==========================================
+       1. NAVBAR (Barra de Navegação Superior)
+       - bg-dark / navbar-dark: fundo escuro com textos claros
+       - container: centraliza e dá espaçamento lateral
+       ========================================== -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+    <div class="container">
+      <!-- Logo / Nome da Loja -->
+      <a class="navbar-brand fw-bold fs-4" href="#">
+        Classic<span class="logo-destaque">Cars</span>
+      </a>
+
+      <!-- Botão Hamburguer para celular/telas pequenas -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavbar" aria-controls="menuNavbar" aria-expanded="false" aria-label="Abrir menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links da barra de navegação -->
+      <div class="collapse navbar-collapse justify-content-end" id="menuNavbar">
+        <ul class="navbar-nav align-items-center gap-lg-3 my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white-50 active-link" href="#inicio">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white-50" href="#depoimentos">Depoimentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white-50" href="#faq">FAQ</a>
+          </li>
+          <li class="nav-item ms-lg-2">
+            <!-- Botão que abre o Modal -->
+            <button type="button" class="btn btn-comprar" data-bs-toggle="modal" data-bs-target="#modalCompra">
+              Comprar agora
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       2. HERO SECTION (Seção Principal)
+       - row com 2 colunas: texto na esquerda e imagem na direita
+       ========================================== -->
+  <section id="inicio" class="hero-section py-5 my-lg-4">
+    <div class="container">
+      <div class="row align-items-center gy-4">
+        <!-- Coluna da Esquerda: Textos -->
+        <div class="col-12 col-lg-6 pe-lg-5">
+          <h1 class="display-4 fw-bold text-dark lh-sm mb-3">
+            Carros de procedência, escolhidos a dedo.
+          </h1>
+          <p class="lead text-secondary fs-5">
+            A Classic Cars trabalha direto com os melhores fornecedores para levar até você veículos seminovos e zero km de alta qualidade, com garantia e laudo cautelar aprovado.
+          </p>
+        </div>
+
+        <!-- Coluna da Direita: Imagem do Carro -->
+        <div class="col-12 col-lg-6">
+          <div class="hero-image-wrapper shadow-sm rounded-4 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80" 
+                 alt="Carro de alta performance na Classic Cars" 
+                 class="img-fluid w-100 hero-img">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       3. SEÇÃO DE DEPOIMENTOS (Carrossel)
+       - Subtítulo em caixa alta marrom/dourada
+       - Título principal
+       - Carrossel com estrelas, frase, foto e nome do cliente
+       ========================================== -->
+  <section id="depoimentos" class="depoimentos-section py-5 border-top">
+    <div class="container">
+      <!-- Cabeçalho fixo da seção -->
+      <div class="text-center mb-4">
+        <span class="subtitulo-secao fw-bold text-uppercase">QUEM JÁ EXPERIMENTOU</span>
+        <h2 class="fw-bold text-dark mt-1">O que dizem nossos clientes</h2>
+      </div>
+
+      <!-- Carrossel do Bootstrap -->
+      <div id="carrosselDepoimentos" class="carousel slide carousel-dark mx-auto" data-bs-ride="carousel" style="max-width: 750px;">
+        
+        <!-- Slides -->
+        <div class="carousel-inner text-center py-4">
+          <!-- Slide 1 -->
+          <div class="carousel-item active">
+            <div class="estrelas mb-2">★★★★★</div>
+            <p class="depoimento-texto fst-italic fs-5 text-dark px-4">
+              "Melhor atendimento que já recebi em uma loja de carros. Veículo impecável, entregue antes do prazo e com toda documentação pronta."
+            </p>
+            <div class="cliente-info d-flex align-items-center justify-content-center gap-3 mt-3">
+              <div class="avatar-cliente"></div>
+              <div class="text-start">
+                <h6 class="mb-0 fw-bold text-dark">Marina Alves</h6>
+                <small class="text-secondary">Cliente desde 2023</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="carousel-item">
+            <div class="estrelas mb-2">★★★★★</div>
+            <p class="depoimento-texto fst-italic fs-5 text-dark px-4">
+              "Excelente avaliação no meu usado na troca. Negociação transparente, sem surpresas e com uma taxa de financiamento excelente!"
+            </p>
+            <div class="cliente-info d-flex align-items-center justify-content-center gap-3 mt-3">
+              <div class="avatar-cliente bg-secondary"></div>
+              <div class="text-start">
+                <h6 class="mb-0 fw-bold text-dark">Carlos Eduardo</h6>
+                <small class="text-secondary">Comprou em 2024</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="carousel-item">
+            <div class="estrelas mb-2">★★★★★</div>
+            <p class="depoimento-texto fst-italic fs-5 text-dark px-4">
+              "O laudo cautelar aprovado e a garantia estendida me deram a segurança que eu precisava. Meu próximo carro com certeza será daqui!"
+            </p>
+            <div class="cliente-info d-flex align-items-center justify-content-center gap-3 mt-3">
+              <div class="avatar-cliente bg-dark"></div>
+              <div class="text-start">
+                <h6 class="mb-0 fw-bold text-dark">Fernanda Lima</h6>
+                <small class="text-secondary">Cliente verificada</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botões de Navegação Anterior / Próximo -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carrosselDepoimentos" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carrosselDepoimentos" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Próximo</span>
+        </button>
+
+        <!-- Indicadores (os pontinhos embaixo) -->
+        <div class="carousel-indicators position-static mt-3">
+          <button type="button" data-bs-target="#carrosselDepoimentos" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carrosselDepoimentos" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carrosselDepoimentos" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       4. SEÇÃO FAQ (Perguntas Frequentes / Accordion)
+       ========================================== -->
+  <section id="faq" class="faq-section py-5 bg-white border-top">
+    <div class="container">
+      <h2 class="fw-bold text-center text-dark mb-4">Perguntas frequentes</h2>
+
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-9 col-lg-8">
+          <!-- Accordion Bootstrap -->
+          <div class="accordion" id="accordionFaq">
+
+            <!-- Pergunta 1 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Qual a garantia oferecida nos veículos?
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionFaq">
+                <div class="accordion-body text-secondary">
+                  Todos os nossos veículos contam com 90 dias de garantia total de motor e câmbio, além da opção de estender a garantia para até 1 ano.
+                </div>
+              </div>
+            </div>
+
+            <!-- Pergunta 2 (Aberta por padrão com a classe 'show', idêntico ao modelo) -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                  Vocês entregam para todo o Brasil?
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionFaq">
+                <div class="accordion-body text-secondary">
+                  Sim! Enviamos para todas as regiões em caminhão cegonha ou guincho plataforma dedicado, com prazo médio de 3 a 7 dias úteis dependendo da localidade.
+                </div>
+              </div>
+            </div>
+
+            <!-- Pergunta 3 -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Posso dar meu carro usado como entrada?
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionFaq">
+                <div class="accordion-body text-secondary">
+                  Com certeza! Fazemos uma avaliação justa do seu seminovo baseada no mercado e tabela FIPE, abatendo o valor diretamente no novo veículo.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       5. FOOTER (Rodapé Simples Escuro)
+       ========================================== -->
+  <footer class="footer-custom bg-dark text-white-50 text-center py-4 mt-auto">
+    <div class="container">
+      <small>© 2026 Classic Cars. Marca fictícia criada para fins didáticos.</small>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       6. MODAL ("Comprar agora" / "Faça seu pedido")
+       - id="modalCompra" (linkado ao botão da navbar)
+       ========================================== -->
+  <div class="modal fade" id="modalCompra" tabindex="-1" aria-labelledby="modalCompraLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        
+        <!-- Cabeçalho do Modal -->
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold text-dark fs-5" id="modalCompraLabel">Faça seu pedido:</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+
+        <!-- Corpo do Modal com Checkboxes -->
+        <div class="modal-body py-4">
+          <form id="formPedido">
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" value="garantia" id="item1">
+              <label class="form-check-label text-dark" for="item1">
+                Kit de degustação / Test Drive agendado
+              </label>
+            </div>
+
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" value="revisao" id="item2">
+              <label class="form-check-label text-dark" for="item2">
+                1 pacote de revisão completa e garantia 1 ano
+              </label>
+            </div>
+
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" value="pelicula" id="item3">
+              <label class="form-check-label text-dark" for="item3">
+                Pacote com película térmica e proteção de pintura
+              </label>
+            </div>
+          </form>
+        </div>
+
+        <!-- Rodapé do Modal com Botão Azul -->
+        <div class="modal-footer border-0 pt-0">
+          <button type="button" class="btn btn-primary px-4 py-2 fw-medium rounded-2">
+            Ir para o carrinho
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript do Bootstrap 5 (Necessário para Modal, Carrossel e Accordion funcionarem ao clicar!) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+nymous"></script>
+</body>
+</html>

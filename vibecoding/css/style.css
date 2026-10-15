@@ -1,0 +1,1691 @@
+/* ==========================================================================
+   NEXUS // ZERO — CINEMATIC GAMING VAULT
+   Estilo Principal e Sistema de Design Cibernético
+   Autor: Gustavo | Disciplina: Front-End (CP5 - Vibecoding)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   01. VARIÁVEIS DE DESIGN & TOKENS VISUAIS
+   -------------------------------------------------------------------------- */
+:root {
+  /* Bases de Profundidade & Superfícies */
+  --bg-void: #05070b;
+  --bg-surface-1: #0a0e17;
+  --bg-surface-2: #111827;
+  --bg-surface-3: #1a2236;
+  --bg-card: rgba(17, 24, 39, 0.78);
+  --bg-glass: rgba(10, 14, 23, 0.65);
+  
+  /* Bordas e Divisores */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.16);
+  --border-cyan: rgba(0, 245, 255, 0.35);
+  --border-crimson: rgba(255, 0, 85, 0.35);
+  
+  /* Cores de Energia & Acento */
+  --accent-cyan: #00f5ff;
+  --accent-cyan-hover: #5df8ff;
+  --accent-crimson: #ff0055;
+  --accent-crimson-hover: #ff3377;
+  --accent-violet: #8a2be2;
+  --accent-amber: #ffb703;
+  --accent-emerald: #00f076;
+  
+  /* Iluminação Volumétrica & Glows */
+  --glow-cyan: 0 0 25px rgba(0, 245, 255, 0.45);
+  --glow-cyan-lg: 0 0 50px rgba(0, 245, 255, 0.25), 0 0 100px rgba(0, 245, 255, 0.12);
+  --glow-crimson: 0 0 25px rgba(255, 0, 85, 0.45);
+  --glow-text-cyan: 0 0 12px rgba(0, 245, 255, 0.6);
+  --glow-text-crimson: 0 0 12px rgba(255, 0, 85, 0.6);
+  
+  /* Tipografia */
+  --font-display: 'Orbitron', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+  
+  /* Escala Tipográfica Fluida */
+  --text-xs: clamp(0.72rem, 0.68rem + 0.2vw, 0.82rem);
+  --text-sm: clamp(0.82rem, 0.78rem + 0.25vw, 0.92rem);
+  --text-base: clamp(0.95rem, 0.9rem + 0.3vw, 1.05rem);
+  --text-lg: clamp(1.15rem, 1.05rem + 0.45vw, 1.35rem);
+  --text-xl: clamp(1.4rem, 1.25rem + 0.8vw, 1.85rem);
+  --text-2xl: clamp(1.8rem, 1.5rem + 1.6vw, 2.75rem);
+  --text-3xl: clamp(2.4rem, 1.9rem + 2.5vw, 4rem);
+  --text-hero: clamp(2.8rem, 2.2rem + 4.8vw, 6.2rem);
+  
+  /* Cores de Texto */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  /* Espaçamentos e Geometria */
+  --section-padding: clamp(4.5rem, 8vw, 9rem);
+  --container-max: 1360px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
+  /* Transições Padrão */
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.2s var(--ease-cinematic);
+  --transition-medium: 0.4s var(--ease-cinematic);
+  --transition-slow: 0.8s var(--ease-cinematic);
+}
+
+/* --------------------------------------------------------------------------
+   02. RESET & REGRAS GLOBAIS
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: auto; /* Lenis assume o controle */
+  background-color: var(--bg-void);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-void);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Foco Visível para Acessibilidade */
+:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 4px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+   03. CAMADAS DE EFEITOS CINEMATOGRÁFICOS GLOBAIS (FILM GRAIN, VIGNETTE, MESH)
+   -------------------------------------------------------------------------- */
+
+/* EFEITO ÚNICO 1: Film Grain Overlay (Ruído Analógico de Cinema) */
+.film-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 900;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* EFEITO ÚNICO 2: Vinheta Volumétrica & Scanlines CRT Sutis */
+.cinematic-vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 890;
+  background: radial-gradient(circle at center, transparent 40%, rgba(5, 7, 11, 0.75) 90%, #05070b 100%),
+              repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 3px);
+}
+
+/* EFEITO ÚNICO 3: Spotlight / Lanterna que Revela Glifos e Circuitos Ocultos */
+.spotlight-reveal-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.18;
+  background-image: radial-gradient(rgba(0, 245, 255, 0.15) 1px, transparent 1px),
+                    linear-gradient(to right, rgba(0, 245, 255, 0.04) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0, 245, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px, 64px 64px, 64px 64px;
+  -webkit-mask-image: radial-gradient(circle 320px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
+  mask-image: radial-gradient(circle 320px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), black 0%, transparent 100%);
+  transition: opacity 0.5s ease;
+}
+
+/* Canvas de Partículas Interativas (Nebulosa Quântica) */
+#canvas-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   04. CURSOR CUSTOMIZADO CIBERNÉTICO & MAGNÉTICO
+   -------------------------------------------------------------------------- */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent-cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s ease-out, background-color 0.3s ease;
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(0, 245, 255, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s var(--ease-cinematic),
+              height 0.3s var(--ease-cinematic),
+              border-color 0.3s ease,
+              background-color 0.3s ease,
+              opacity 0.3s ease;
+}
+
+.cursor-ring .cursor-text {
+  font-family: var(--font-display);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--bg-void);
+  opacity: 0;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* Estados do Cursor */
+.cursor-ring.is-hover {
+  width: 64px;
+  height: 64px;
+  border-color: var(--accent-cyan);
+  background-color: rgba(0, 245, 255, 0.15);
+  backdrop-filter: blur(2px);
+}
+
+.cursor-ring.is-action {
+  width: 80px;
+  height: 80px;
+  background-color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.cursor-ring.is-action .cursor-text {
+  opacity: 1;
+}
+
+.cursor-ring.is-crimson {
+  width: 80px;
+  height: 80px;
+  background-color: var(--accent-crimson);
+  border-color: var(--accent-crimson);
+  box-shadow: var(--glow-crimson);
+}
+
+.cursor-ring.is-crimson .cursor-text {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   05. PRELOADER CINEMATOGRÁFICO DE BOOT DO SISTEMA
+   -------------------------------------------------------------------------- */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #030407;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  transition: clip-path 1s var(--ease-cinematic), opacity 0.8s ease;
+}
+
+.preloader.is-loaded {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  pointer-events: none;
+}
+
+.preloader-box {
+  width: 100%;
+  max-width: 520px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(10, 14, 23, 0.85);
+  padding: 2rem;
+  position: relative;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+}
+
+.preloader-box::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 16px;
+  height: 16px;
+  border-top: 2px solid var(--accent-cyan);
+  border-left: 2px solid var(--accent-cyan);
+}
+
+.preloader-box::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 16px;
+  height: 16px;
+  border-bottom: 2px solid var(--accent-cyan);
+  border-right: 2px solid var(--accent-cyan);
+}
+
+.preloader-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.75rem;
+}
+
+.preloader-title {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  color: var(--accent-cyan);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.preloader-percent {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.preloader-terminal {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  height: 54px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.preloader-line {
+  display: block;
+  opacity: 0.85;
+}
+
+.preloader-line::before {
+  content: '>';
+  color: var(--accent-cyan);
+  margin-right: 0.5rem;
+}
+
+.preloader-bar-track {
+  width: 100%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.preloader-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-violet), var(--accent-cyan));
+  box-shadow: 0 0 12px var(--accent-cyan);
+  transition: width 0.05s linear;
+}
+
+/* --------------------------------------------------------------------------
+   06. NAVEGAÇÃO & HEADER HUD
+   -------------------------------------------------------------------------- */
+.hud-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 500;
+  padding: 1.25rem 2.5rem;
+  transition: background-color 0.4s ease, backdrop-filter 0.4s ease, padding 0.3s ease;
+}
+
+.hud-header.is-scrolled {
+  background-color: rgba(5, 7, 11, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.9rem 2.5rem;
+}
+
+.hud-nav-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logotipo Vetorial SVG & Tipográfico */
+.brand-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-decoration: none;
+}
+
+.brand-symbol-svg {
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(0 0 8px rgba(0, 245, 255, 0.5));
+  transition: transform 0.4s var(--ease-cinematic);
+}
+
+.brand-logo-link:hover .brand-symbol-svg {
+  transform: rotate(90deg) scale(1.08);
+}
+
+.brand-text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.brand-title span {
+  color: var(--accent-cyan);
+}
+
+.brand-status-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--accent-cyan);
+  opacity: 0.8;
+  margin-top: 3px;
+}
+
+/* Links de Navegação */
+.nav-links-list {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+}
+
+.nav-item-link {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  position: relative;
+  padding: 0.4rem 0;
+  transition: color 0.3s ease;
+}
+
+.nav-item-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  transition: width 0.3s var(--ease-cinematic);
+}
+
+.nav-item-link:hover {
+  color: var(--accent-cyan);
+}
+
+.nav-item-link:hover::after {
+  width: 100%;
+}
+
+/* Controles de HUD (Áudio, Cofre, Status) */
+.hud-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Botão de Áudio Sintético Web Audio API */
+.hud-audio-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.hud-audio-btn:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(0, 245, 255, 0.05);
+}
+
+.hud-audio-btn.is-active {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.2);
+}
+
+.audio-equalizer-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.audio-equalizer-bars span {
+  width: 2px;
+  height: 4px;
+  background-color: currentColor;
+  transition: height 0.2s ease;
+}
+
+.hud-audio-btn.is-active .audio-equalizer-bars span:nth-child(1) {
+  animation: sfxBar 0.6s infinite alternate ease-in-out;
+}
+.hud-audio-btn.is-active .audio-equalizer-bars span:nth-child(2) {
+  animation: sfxBar 0.8s 0.2s infinite alternate ease-in-out;
+}
+.hud-audio-btn.is-active .audio-equalizer-bars span:nth-child(3) {
+  animation: sfxBar 0.5s 0.4s infinite alternate ease-in-out;
+}
+
+@keyframes sfxBar {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+
+/* Botão Magnético de Ação */
+.btn-magnetic {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.85rem 1.85rem;
+  border-radius: var(--radius-sm);
+  transition: transform 0.25s var(--ease-cinematic), box-shadow 0.3s ease, background-color 0.3s ease;
+  clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px);
+  will-change: transform;
+}
+
+.btn-primary {
+  background: var(--accent-cyan);
+  color: #03060a;
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.35);
+}
+
+.btn-primary:hover {
+  background: var(--accent-cyan-hover);
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.6);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  backdrop-filter: blur(6px);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(0, 245, 255, 0.08);
+}
+
+.btn-crimson {
+  background: var(--accent-crimson);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 0, 85, 0.4);
+}
+
+.btn-crimson:hover {
+  background: var(--accent-crimson-hover);
+  box-shadow: 0 0 35px rgba(255, 0, 85, 0.65);
+}
+
+/* --------------------------------------------------------------------------
+   07. HERO SECTION CINEMATOGRÁFICO
+   -------------------------------------------------------------------------- */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem 5rem 2rem;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.hero-content-wrapper {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+}
+
+/* Telemetria de Satélite / Servidor */
+.hero-telemetry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.4rem 1.1rem;
+  background: rgba(0, 245, 255, 0.05);
+  border: 1px solid var(--border-cyan);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent-cyan);
+  letter-spacing: 0.15em;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.15);
+}
+
+.telemetry-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  animation: livePulse 1.8s infinite;
+}
+
+@keyframes livePulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+/* Título Monumental com Efeito Glitch & Scramble */
+.hero-main-title {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.hero-main-title .title-accent {
+  background: linear-gradient(135deg, #ffffff 10%, var(--accent-cyan) 60%, var(--accent-violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  text-shadow: 0 0 40px rgba(0, 245, 255, 0.3);
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin: 0 auto 2.8rem auto;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Indicador de Scroll Cinematográfico */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.scroll-track-line {
+  width: 1px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-track-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to bottom, transparent, var(--accent-cyan));
+  animation: scrollDown 2s infinite ease-in-out;
+}
+
+@keyframes scrollDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+/* --------------------------------------------------------------------------
+   08. ESTRUTURA GERAL DE SEÇÃO & CABEÇALHOS DE SEÇÃO
+   -------------------------------------------------------------------------- */
+.section-container {
+  padding: var(--section-padding) 2rem;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.section-header-block {
+  margin-bottom: 4rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.22em;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.section-label::before {
+  content: '//';
+  color: var(--accent-crimson);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.section-description {
+  max-width: 480px;
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   09. SEÇÃO DE LANÇAMENTOS // CARDS 3D TILT COM HOLOGRAPHIC SHEEN
+   -------------------------------------------------------------------------- */
+.games-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* EFEITO ÚNICO 4: Card com perspectiva 3D, tilt e reflexo furta-cor */
+.game-card-wrapper {
+  perspective: 1200px;
+}
+
+.game-card {
+  position: relative;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1),
+              border-color 0.4s ease,
+              box-shadow 0.4s ease;
+  overflow: hidden;
+  will-change: transform;
+}
+
+/* Reflexo Holográfico Especular Dinâmico */
+.game-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle 260px at var(--sheen-x, 50%) var(--sheen-y, 50%), 
+              rgba(0, 245, 255, 0.18), 
+              rgba(255, 0, 85, 0.08) 45%, 
+              transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 6;
+}
+
+.game-card:hover {
+  border-color: var(--border-cyan);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 245, 255, 0.15);
+}
+
+.game-card:hover::before {
+  opacity: 1;
+}
+
+/* Capa do Jogo (Arte Vetorial SVG & CSS Gerativa) */
+.game-cover-art {
+  width: 100%;
+  height: 320px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1.25rem;
+  background: #0d131f;
+  transform: translateZ(25px); /* Efeito de profundidade 3D */
+}
+
+.game-cover-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-cinematic);
+}
+
+.game-card:hover .game-cover-svg {
+  transform: scale(1.06);
+}
+
+.game-cover-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(10, 14, 23, 0.95) 10%, transparent);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.game-score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  background: rgba(0, 240, 118, 0.15);
+  border: 1px solid var(--accent-emerald);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-emerald);
+}
+
+.game-platform-icons {
+  display: flex;
+  gap: 0.5rem;
+  color: var(--text-muted);
+}
+
+.game-card-meta {
+  transform: translateZ(15px);
+}
+
+.game-genre-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.game-card-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.game-card-desc {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.game-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  transform: translateZ(20px);
+}
+
+.game-price-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-price-old {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-decoration: line-through;
+}
+
+.game-price-current {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   10. CATEGORIAS & ECOSSISTEMAS (HORIZONTAL STRIP / GRID CINEMÁTICO)
+   -------------------------------------------------------------------------- */
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.category-card {
+  position: relative;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 1.75rem;
+  overflow: hidden;
+  transition: all 0.4s var(--ease-cinematic);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 320px;
+}
+
+.category-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-cyan), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-cyan);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), var(--glow-subtle);
+}
+
+.category-card:hover::after {
+  opacity: 1;
+}
+
+.category-icon-wrapper {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 245, 255, 0.06);
+  border: 1px solid var(--border-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-cyan);
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-icon-wrapper {
+  transform: scale(1.1) rotate(5deg);
+  background: var(--accent-cyan);
+  color: var(--bg-void);
+  box-shadow: var(--glow-cyan);
+}
+
+.category-number {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.category-name {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.category-info {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   11. OFERTA EM DESTAQUE COM CONTADOR REGRESSIVO DE IMPACTO
+   -------------------------------------------------------------------------- */
+.spotlight-deal-wrapper {
+  position: relative;
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(10, 14, 23, 0.98));
+  border: 1px solid var(--border-crimson);
+  border-radius: var(--radius-lg);
+  padding: 4rem;
+  overflow: hidden;
+  box-shadow: 0 0 50px rgba(255, 0, 85, 0.12), inset 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.spotlight-deal-wrapper::before {
+  content: 'OVERRIDE PROTOCOL';
+  position: absolute;
+  top: 1.5rem;
+  right: -3.5rem;
+  background: var(--accent-crimson);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  padding: 0.35rem 4rem;
+  transform: rotate(45deg);
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
+}
+
+.deal-layout-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.deal-badge-urgent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  background: rgba(255, 0, 85, 0.12);
+  border: 1px solid var(--accent-crimson);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--accent-crimson);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.deal-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.deal-description {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Contador Regressivo em Tempo Real */
+.deal-countdown-box {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(5, 7, 11, 0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  min-width: 78px;
+  padding: 0.75rem 0.5rem;
+}
+
+.countdown-digits {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-crimson);
+  line-height: 1;
+  text-shadow: 0 0 12px rgba(255, 0, 85, 0.5);
+}
+
+.countdown-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+}
+
+.deal-pricing-row {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.deal-discount-pill {
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #ffffff;
+  background: var(--accent-crimson);
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--glow-crimson);
+}
+
+.deal-price-current {
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--text-primary);
+}
+
+.deal-price-original {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--text-dim);
+  text-decoration: line-through;
+}
+
+.deal-media-visual {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-medium);
+}
+
+.deal-media-visual svg {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16/10;
+}
+
+/* --------------------------------------------------------------------------
+   12. DIFERENCIAIS DA LOJA (ICONES VETORIAIS ANIMADOS)
+   -------------------------------------------------------------------------- */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.feature-item-card {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 2.25rem 1.75rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.feature-item-card:hover {
+  border-color: var(--border-cyan);
+  transform: translateY(-5px);
+  background: rgba(17, 24, 39, 0.95);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.feature-icon-svg {
+  width: 44px;
+  height: 44px;
+  color: var(--accent-cyan);
+  margin-bottom: 1.5rem;
+  transition: transform 0.4s var(--ease-cinematic);
+}
+
+.feature-item-card:hover .feature-icon-svg {
+  transform: rotate(-10deg) scale(1.15);
+  color: var(--accent-cyan-hover);
+  filter: drop-shadow(0 0 8px var(--accent-cyan));
+}
+
+.feature-title {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+  color: var(--text-primary);
+}
+
+.feature-desc {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   13. DEPOIMENTOS & COMUNIDADE DO SINDICATO
+   -------------------------------------------------------------------------- */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.testimonial-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(8px);
+  position: relative;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+  border-color: var(--border-cyan);
+  transform: translateY(-4px);
+}
+
+.testimonial-quote-text {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+  font-style: italic;
+  position: relative;
+}
+
+.testimonial-quote-text::before {
+  content: '“';
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--accent-cyan);
+  opacity: 0.2;
+  position: absolute;
+  top: -1.8rem;
+  left: -0.5rem;
+}
+
+.testimonial-author-block {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1.25rem;
+}
+
+.author-hologram-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-cyan);
+  overflow: hidden;
+  background: #090e18;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+}
+
+.author-guild {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--accent-cyan);
+  letter-spacing: 0.12em;
+}
+
+/* --------------------------------------------------------------------------
+   14. NEWSLETTER / TERMINAL DE ACESSO ANTECIPADO
+   -------------------------------------------------------------------------- */
+.terminal-newsletter-wrapper {
+  background: rgba(10, 14, 23, 0.95);
+  border: 1px solid var(--border-cyan);
+  border-radius: var(--radius-md);
+  padding: 3.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 245, 255, 0.1);
+}
+
+.terminal-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+}
+
+.terminal-dots-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.terminal-dots-row span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--border-subtle);
+}
+
+.terminal-dots-row span:nth-child(1) { background-color: var(--accent-crimson); }
+.terminal-dots-row span:nth-child(2) { background-color: var(--accent-amber); }
+.terminal-dots-row span:nth-child(3) { background-color: var(--accent-emerald); }
+
+.terminal-label-status {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent-cyan);
+  letter-spacing: 0.15em;
+}
+
+.terminal-form-layout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.25rem;
+  max-width: 680px;
+  margin-top: 1.75rem;
+}
+
+.terminal-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.terminal-input-prefix {
+  position: absolute;
+  left: 1.25rem;
+  font-family: var(--font-mono);
+  color: var(--accent-cyan);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.terminal-input-field {
+  width: 100%;
+  background: rgba(5, 7, 11, 0.8);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1rem 1rem 2.8rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.terminal-input-field:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+}
+
+.terminal-input-field::placeholder {
+  color: var(--text-dim);
+}
+
+.terminal-feedback-message {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  margin-top: 0.85rem;
+  color: var(--accent-emerald);
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   15. RODAPÉ COMPLETO & STATUS DO SISTEMA
+   -------------------------------------------------------------------------- */
+.hud-footer {
+  border-top: 1px solid var(--border-subtle);
+  background-color: #030508;
+  padding: 5rem 2rem 3rem 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-content-grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr 1.2fr;
+  gap: 3.5rem;
+  margin-bottom: 4rem;
+}
+
+.footer-brand-summary {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: 1.25rem;
+  max-width: 320px;
+}
+
+.footer-column-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.footer-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footer-link-item {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  transition: color 0.25s ease, transform 0.25s ease;
+  display: inline-block;
+}
+
+.footer-link-item:hover {
+  color: var(--accent-cyan);
+  transform: translateX(4px);
+}
+
+.footer-status-panel {
+  background: rgba(17, 24, 39, 0.4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+}
+
+.status-row-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  margin-bottom: 0.5rem;
+}
+
+.status-row-item:last-child {
+  margin-bottom: 0;
+}
+
+.status-state-ok {
+  color: var(--accent-emerald);
+}
+
+.footer-bottom-bar {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   16. ACESSIBILIDADE & PREFERS-REDUCED-MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .film-grain,
+  .spotlight-reveal-layer,
+  #canvas-particles,
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+  
+  .game-card {
+    transform: none !important;
+  }
+  
+  .preloader {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   17. RESPONSIVIDADE & MEDIA QUERIES (TABLETS & SMARTPHONES)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .games-showcase-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .categories-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .deal-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  
+  .footer-content-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Em telas touch o cursor customizado deve ser desativado */
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+  
+  body, button, a {
+    cursor: auto !important;
+  }
+  
+  .hud-header {
+    padding: 1rem 1.25rem;
+  }
+  
+  .nav-links-list {
+    display: none; /* Em versão compacta esconde links simples */
+  }
+  
+  .hero-section {
+    padding: 7rem 1.25rem 4rem 1.25rem;
+  }
+  
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .hero-cta-group .btn-magnetic {
+    width: 100%;
+  }
+  
+  .games-showcase-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .categories-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .terminal-form-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-content-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .spotlight-deal-wrapper {
+    padding: 2.5rem 1.5rem;
+  }
+  
+  .deal-countdown-box {
+    gap: 0.6rem;
+  }
+  
+  .countdown-unit {
+    min-width: 60px;
+    padding: 0.5rem 0.25rem;
+  }
+  
+  .countdown-digits {
+    font-size: 1.4rem;
+  }
+}
+
